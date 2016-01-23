@@ -1,0 +1,25 @@
+{
+  "name": "Osco",
+  "version": "1.0.0",
+  "description": "PostIt API",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "node",
+    "socket.io"
+  ],
+  "author": "sidney.bourgalle@gmail.com",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.13.4",
+    "lodash": "^4.0.0",
+    "socket.io": "^1.4.4"
+  }
+}
