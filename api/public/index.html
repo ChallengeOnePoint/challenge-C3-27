@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocso API</title>
+    <script src="/api.js"></script>
+</head>
+<body>
+    Hello world
+    <script>
+        API.on('ready', function() {
+            API.login(function(data) {
+                console.log('login', data);
+
+                // Listen
+                API.on('update', function(data) {
+                    console.log('update', data);
+                });
+
+                // Get all
+                API.get(function(data) {
+                    console.log('get All', data);
+
+                    // Add
+                    API.add({
+                        title: 'bonjour',
+                        body: 'hohoho'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
