@@ -112,7 +112,6 @@ gulp.task('cleancss', ['less', 'onecss'], function () {
 });
 
 // Concatène et minifie le JS en fonction des dependences puis le met dans dist/js
-<<<<<<< HEAD
 gulp.task('js', function(){
   return gulp.src(['front/js/main.js'])
     .pipe(resolveDependencies({ pattern: /\* @requires [\s-]*(.*?\.js)/g })).on('error', function(err) {
@@ -122,17 +121,6 @@ gulp.task('js', function(){
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./front/dist/js'))
     .pipe(browserSync.stream());
-=======
-gulp.task('js', function () {
-    return gulp.src(['front/js/main.js'])
-        .pipe(resolveDependencies({pattern: /\* @requires [\s-]*(.*?\.js)/g})).on('error', function (err) {
-            console.log(err.message);
-        })
-        .pipe(uglify())
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest('./front/dist/js'))
-        .pipe(browserSync.stream());
->>>>>>> cbc98fbcbe940fd25a418b85a9dbc602673fe5e6
 });
 
 // En cas de présence de CSS pour des plugins
