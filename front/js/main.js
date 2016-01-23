@@ -3,22 +3,30 @@
  * @requires fastclick.js
  */
 
-(function(window, document, $, undefined) {
-    'use strict';
+API.on('ready', function() {
+	(function(window, document, $, undefined) {
+		'use strict';
 
-    $(document).on('ready', function() {
-		// Lancement FastClick sur Body
-		window.addEventListener('load', function() {
-			new FastClick(document.body);
-		}, false);
+		$(function() {
+			// Lancement FastClick sur Body
+			window.addEventListener('load', function() {
+				new FastClick(document.body);
+			}, false);
 
-		console.log('ready');
+			// FB connect
+			$("#fb-connect-bt").bind("click", function(e) {
+				e.preventDefault();
+				API.login(function(data) {
+                    $(".popin-login").fadeOut("slow");
 
-		// FB connect
-		$("#fb-connect-bt").bind("click", function(e) {
-			e.preventDefault();
-			$(".popin-login").fadeOut("slow");
+                    // Get datas
+                    API.get(function(data) {
+
+                    })
+				});
+
+			});
 		});
-    });
 
-})(window, document, jQuery);
+	})(window, document, jQuery);
+});
