@@ -51,13 +51,13 @@ gulp.task('export', ['update', 'zip'], function() {
 // Connect le server
 gulp.task('connect', function() {
   browserSync.init({
-      server: __dirname+"/front/dist"
+      server: "./front/dist"
   });
 });
 
 // Custom font with SVG
 gulp.task('glyphicons', function() {
-  return gulp.src('./front/glyphicons/**/*.svg') // où sont vos svg
+  return gulp.src('glyphicons/**/*.svg') // où sont vos svg
     .pipe(iconfontCss({
       fontName: 'icons', // nom de la fonte, doit être identique au nom du plugin iconfont
       targetPath: '../css/icons.css', // emplacement de la css finale
@@ -71,15 +71,15 @@ gulp.task('glyphicons', function() {
 
 // Met le html dans dist
 gulp.task('html', function () {
-  return gulp.src('./front/*.html')
+  return gulp.src('*.html')
   	.pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest(__dirname+'/front/dist'))
+    .pipe(gulp.dest('./front/dist'))
     .pipe(browserSync.stream());
 });
 
 // Process le less et le minifie
 gulp.task('less', function () {
-  return gulp.src('./front/css/style.less')
+  return gulp.src('css/style.less')
   	.pipe(plumber())
   	.pipe(plumber( function (error) {
         gutil.log(gutil.colors.red(error.message));
@@ -98,7 +98,7 @@ gulp.task('less', function () {
 
 // En présence de CSS dans le dossier /css
 // gulp.task('css', function () {
-//   return gulp.src('./front/css/**/*.css')
+//   return gulp.src('css/**/*.css')
 //     .pipe(plumber())
 //     .pipe(plumber( function (error) {
 //         gutil.log(gutil.colors.red(error.message));
@@ -113,7 +113,7 @@ gulp.task('less', function () {
 // Concatène tous les fichiers CSS de /dist en style.css et le minifie
 gulp.task('onecss', ['less'], function () {
   del.sync(['./front/dist/css/style.css']);
-  return gulp.src('./front/dist/css/*.css')
+  return gulp.src('dist/css/*.css')
     .pipe(concat('style.css'))
     .pipe(minifyCSS())
     .pipe(gulp.dest('./front/dist/css'))
@@ -139,7 +139,7 @@ gulp.task('js', function(){
 
 // En cas de présence de CSS pour des plugins
 gulp.task('plugins-css', function () {
-  return gulp.src('./front/plugins/*.css')
+  return gulp.src('plugins/*.css')
     .pipe(minifyCSS())
     .pipe(concat('plugins.css'))
     .pipe(gulp.dest('./front/dist/plugins'))
@@ -148,7 +148,7 @@ gulp.task('plugins-css', function () {
 
 // En cas de présence de JS pour des plugins
 gulp.task('plugins-js', function () {
-  return gulp.src('./front/plugins/*.js')
+  return gulp.src('plugins/*.js')
     .pipe(resolveDependencies({ pattern: /\* @requires [\s-]*(.*?\.js)/g })).on('error', function(err) {
         console.log(err.message);
       })
@@ -159,13 +159,13 @@ gulp.task('plugins-js', function () {
 
 // Met les images dans dist/img
 gulp.task('image', function () {
-  return gulp.src('./front/img/**/*.{gif,jpg,png,svg}')
+  return gulp.src('img/**/*.{gif,jpg,png,svg}')
     .pipe(gulp.dest('./front/dist/img'));
 });
 
 // Met les fonts dans dist/fonts
 gulp.task('fonts', function () {
-  return gulp.src('./front/fonts/**/*.{ttf,woff,eof,svg}')
+  return gulp.src('fonts/**/*.{ttf,woff,eof,svg}')
     .pipe(gulp.dest('./front/dist/fonts'));
 });
 
@@ -180,13 +180,13 @@ gulp.task('zip', ['update'], function () {
 });
 
 gulp.task('watch', function () {
-	gulp.watch('front/*.html', ['html']);
-  gulp.watch('front/css/**/*.less', ['less', 'onecss']);
+	gulp.watch('*.html', ['html']);
+  gulp.watch('css/**/*.less', ['less', 'onecss']);
   // gulp.watch('css/*.css', ['css', 'onecss']);
-  gulp.watch('front/plugins/**/*.css', ['plugins-css']);
-  gulp.watch('front/plugins/**/*.js', ['plugins-js']);
-	gulp.watch('front/js/**/*.js', ['js']);
-	gulp.watch('front/img/**/*.{gif,jpg,png,svg}', ['image']);
-  gulp.watch('front/fonts/**/*.{ttf,woff,eof,svg}', ['fonts']);
-  gulp.watch('front/glyphicons/**/*.svg', ['glyphicons']);
+  gulp.watch('plugins/**/*.css', ['plugins-css']);
+  gulp.watch('plugins/**/*.js', ['plugins-js']);
+	gulp.watch('js/**/*.js', ['js']);
+	gulp.watch('img/**/*.{gif,jpg,png,svg}', ['image']);
+  gulp.watch('fonts/**/*.{ttf,woff,eof,svg}', ['fonts']);
+  gulp.watch('glyphicons/**/*.svg', ['glyphicons']);
 });

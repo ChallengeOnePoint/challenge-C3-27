@@ -13,6 +13,12 @@
 		}, false);
 
 		console.log('ready');
+
+		// FB connect
+		$("#fb-connect-bt").bind("click", function(e) {
+			e.preventDefault();
+			$(".popin-login").fadeOut("slow");
+		});
     });
 
 })(window, document, jQuery);
