@@ -96,20 +96,6 @@ gulp.task('less', function () {
   	.pipe(gulp.dest('./front/dist/css'));
 });
 
-// En présence de CSS dans le dossier /css
-// gulp.task('css', function () {
-//   return gulp.src('./front/css/**/*.css')
-//     .pipe(plumber())
-//     .pipe(plumber( function (error) {
-//         gutil.log(gutil.colors.red(error.message));
-//         gutil.beep();
-//         this.emit('end');
-//     }))
-//     .pipe(concat('style-css.css'))
-//     .pipe(minifyCSS())
-//     .pipe(gulp.dest('./front/dist/css'));
-// });
-
 // Concatène tous les fichiers CSS de /dist en style.css et le minifie
 gulp.task('onecss', ['less'], function () {
   del.sync(['./front/dist/css/style.css']);
@@ -127,7 +113,7 @@ gulp.task('cleancss', ['less', 'onecss'], function() {
 
 // Concatène et minifie le JS en fonction des dependences puis le met dans dist/js
 gulp.task('js', function(){
-  return gulp.src(['js/main.js'])
+  return gulp.src(['front/js/main.js'])
     .pipe(resolveDependencies({ pattern: /\* @requires [\s-]*(.*?\.js)/g })).on('error', function(err) {
 				console.log(err.message);
     	})
