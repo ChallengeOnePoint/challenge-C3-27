@@ -1,6 +1,6 @@
 (function(window) {
     var API = function API() {
-        this._path = '/';
+        this._path = 'http://localhost:1664/';
         this._ready = false;
         this._user = null;
         this._events = [];
@@ -114,7 +114,6 @@
 
                         // Login
                         var __callback = function() {
-                            console.log('callback !!!');
                             self.off('login', __callback);
                             callback(self._user);
                         };

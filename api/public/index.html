@@ -12,9 +12,13 @@
             API.login(function(data) {
                 console.log('login', data);
 
-                // Listen
+                // Update
                 API.on('update', function(data) {
                     console.log('update', data);
+                });
+
+                API.on('remove', function(data) {
+                    console.log('remove', data);
                 });
 
                 // Get all
@@ -26,6 +30,15 @@
                         title: 'bonjour',
                         body: 'hohoho'
                     });
+
+                    // Remove
+                    API.remove(data[0]);
+
+                    // Lock
+                    API.lock(data[1]);
+                    setTimeout(function() {
+                        API.unlock(data[1]);
+                    }, 5000);
                 });
             });
         });

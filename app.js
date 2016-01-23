@@ -2,6 +2,7 @@ var express = require('express'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server),
+    _ = require('lodash'),
     PostIt = require('./api/vo/postit').PostIt;
 
 server.listen(1664);
@@ -20,14 +21,10 @@ io.on('connection', function (socket) {
     var user;
 
     var update = function(postit) {
-        data = postit.toObject();
+        var data = postit.toObject();
         // Broadcast to all
-        socket.broadcast.emit('update', {
-            postit: data
-        });
-        socket.emit('update', {
-            postit: data
-        });
+        socket.broadcast.emit('update', data);
+        socket.emit('update', data);
     };
 
     // Connect
@@ -38,11 +35,9 @@ io.on('connection', function (socket) {
 
     // Get
     socket.on('get', function () {
-        socket.emit('get', {
-            postits: database.map(function(item) {
-                return item.toObject();
-            })
-        });
+        socket.emit('get', database.map(function(item) {
+            return item.toObject();
+        }));
     });
 
     // Add
@@ -54,17 +49,16 @@ io.on('connection', function (socket) {
 
     // Remove
     socket.on('remove', function(data) {
+        var item = _.find(database, function(item) {
+            return item.id === data.id;
+        });
         database = _.filter(database, function(item) {
             return item.id !== data.id;
         });
 
         // Emit
-        socket.broadcast.emit('remove', {
-            postit: data
-        });
-        socket.emit('remove', {
-            postit: data
-        });
+        socket.broadcast.emit('remove', item);
+        socket.emit('remove', item);
     });
 
     // lock
